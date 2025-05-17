@@ -1,6 +1,7 @@
 # Ex06 BMI Calculator
-## Date:
-
+## Date: 17.05.2025
+## Name: Keerthi Vasan A
+## Reg No: 212222240048
 ## AIM
 To create a BMI calculator using React Router 
 
@@ -21,9 +22,116 @@ Classify the BMI result into categories (Underweight, Normal weight, Overweight,
 Navigate between pages using React Router.
 
 ## PROGRAM
+Home.jsx:
+```jsx
+import React from 'react';
+import { Link } from 'react-router-dom';
 
+const Home = () => {
+  return (
+    <div className="page">
+      <h1>Welcome to BMI Calculator</h1>
+      <Link to="/calculate">
+        <button>Go to Calculator</button>
+      </Link>
+    </div>
+  );
+};
+
+export default Home;
+
+
+```
+
+BMICalculator.jsx:
+```jsx
+import React, { useState } from 'react';
+
+const BMICalculator = () => {
+  const [weight, setWeight] = useState('');
+  const [height, setHeight] = useState('');
+  const [bmi, setBmi] = useState(null);
+  const [category, setCategory] = useState('');
+
+  const calculateBMI = () => {
+    if (!weight || !height) return;
+    const h = height / 100; // convert to meters
+    const result = (weight / (h * h)).toFixed(2);
+    setBmi(result);
+
+    if (result < 18.5) setCategory('Underweight');
+    else if (result < 24.9) setCategory('Normal weight');
+    else if (result < 29.9) setCategory('Overweight');
+    else setCategory('Obesity');
+  };
+
+  return (
+    <div className="page">
+      <h2>BMI Calculator</h2>
+      <input
+        type="number"
+        placeholder="Weight (kg)"
+        value={weight}
+        onChange={(e) => setWeight(e.target.value)}
+      />
+      <input
+        type="number"
+        placeholder="Height (cm)"
+        value={height}
+        onChange={(e) => setHeight(e.target.value)}
+      />
+      <button onClick={calculateBMI}>Calculate</button>
+
+      {bmi && (
+        <div className="result">
+          <p><strong>BMI:</strong> {bmi}</p>
+          <p><strong>Category:</strong> {category}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default BMICalculator;
+
+
+```
+
+App.css:
+```css
+.page {
+  text-align: center;
+  margin-top: 60px;
+}
+
+input {
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+}
+
+button {
+  padding: 10px 20px;
+  background: #007bff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.result {
+  margin-top: 20px;
+}
+
+
+```
 
 ## OUTPUT
+![image](https://github.com/user-attachments/assets/3cbdf15e-7100-4343-b8f2-60f7e57b8714)
 
 
 ## RESULT
